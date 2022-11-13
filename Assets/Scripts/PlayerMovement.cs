@@ -3,24 +3,28 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed;
-    [SerializeField] private float gravity;
+    [SerializeField] private float speed; // used to set Running velocity
+    [SerializeField] private float gravity; // used for Jumping
+    [SerializeField] private LayerMask groundLayer;
+
     private Rigidbody2D body;
     private Animator anim;
-    private bool grounded;
-    
+    private BoxCollider2D boxCollider;
+    private float horizontalInput;
+
 
     private void Awake()
     {
         //Grab reference from rigidbody and animator from object
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        boxCollider = GetComponent<BoxCollider2D>();
     }
+
 
     private void Update()
     {
-      
-        float horizontalInput = Input.GetAxis("Horizontal");
+        horizontalInput = Input.GetAxis("Horizontal");
 
         //Walking
         body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
@@ -34,34 +38,39 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-        if (Input.GetKey(KeyCode.Space) && grounded)
+        if (Input.GetKey(KeyCode.Space) && isGrounded())
             Jump();
 
 
 
         //Set animator parameters
         anim.SetBool("run", horizontalInput != 0);
-        anim.SetBool("grounded", grounded);
+        anim.SetBool("grounded", isGrounded());
 
     }
+
 
     private void Jump() {
 
         body.velocity = new Vector2(body.velocity.x, gravity);
         anim.SetTrigger("jump");
-        grounded = false;
 
     }
 
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private bool isGrounded() 
+    {
+        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size,0, Vector2.down, 0.1f, groundLayer);
+        return raycastHit.collider != null;
+            
+    }
+
+
+    public bool canAttack()
     {
 
-        if (collision.gameObject.tag == "Ground")
-            grounded = true;
+        return horizontalInput == 0 && isGrounded();
 
     }
-
-
 
 }
