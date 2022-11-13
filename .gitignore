@@ -48,7 +48,6 @@ ExportedObj/
 *.VC.db
 
 # Unity3D generated meta files
-.meta
 *.pidb.meta
 *.pdb.meta
 *.mdb.meta
@@ -73,3 +72,6 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Other mono files
+mono_crash.*
