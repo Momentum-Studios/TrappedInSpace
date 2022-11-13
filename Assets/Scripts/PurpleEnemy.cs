@@ -1,10 +1,11 @@
 /**
  * file: PurpleEnemy.cs
  * studio: Momentum Studios
+ * authors: Justin Kim
  * class: CS 4700 - Game Development
  * 
  * assignment: Program 4
- * date last modified: 11/10/2022
+ * date last modified: 11/12/2022
  * 
  * purpose: This script controls the movement, shooting, animations, and other
  * functions of the Purple Blaster Enemy.
@@ -15,76 +16,82 @@ using UnityEngine;
 
 public class PurpleEnemy : MonoBehaviour
 {
-    [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float movementSpeed;
-    [SerializeField] private float minimumDistanceFromPlayer;
-    [SerializeField] private float maximumDistanceFromPlayer;
-    [SerializeField] private float maximumShootingDistance;
+    [SerializeField] private float chaseDistance;
+    [SerializeField] private float targetDistance;
+    [SerializeField] private float shootDistance;
+    [SerializeField] private float shootCooldown;
+    [SerializeField] private LayerMask groundLayer;
 
     [SerializeField] private float groundedBoxCastDistance;
     [SerializeField] private float distanceToEdge;
     [SerializeField] private float edgeRaycastDistance;
     [SerializeField] private GameObject muzzleFlash;
+    [SerializeField] private GameObject projectile;
 
     private Rigidbody2D objectRigidbody;
     private BoxCollider2D boxCollider;
     private Animator animator;
+    private Animator muzzleFlashAnimator;
     private Transform playerTransform;
+    private AIState currentAIState;
 
     private float currentDirection;
+    private float shootCooldownRemaining;
     private bool isGrounded;
     private bool isNearEdge;
-    private bool chasingPlayer;
+    private bool shouldShoot;
 
+    private enum AIState {
+        Idle,
+        Chasing,
+        Shooting,
+        Dead
+    }
 
     void Start()
     {
         objectRigidbody = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
+        muzzleFlashAnimator = muzzleFlash.GetComponent<Animator>();
+        currentAIState = AIState.Idle;
+        shootCooldownRemaining = shootCooldown;
     }
 
     void Update()
     {
-        animator.SetFloat("speed", Mathf.Abs(objectRigidbody.velocity.x));
+        if (playerTransform == null) return;
 
-        float velocityDirection = currentDirection;
-        float scaleDirection = Mathf.Sign(transform.localScale.x);
+        handleShootCooldown();
 
-        if (velocityDirection != scaleDirection && playerTransform) {
-            transform.localScale = new Vector3(transform.localScale.x * -1f, transform.localScale.y, transform.localScale.z);
+        switch (currentAIState) {
+            case AIState.Shooting:
+                doShootingState();
+                break;
+            case AIState.Idle: case AIState.Chasing: case AIState.Dead:
+                break;
         }
+
+        handleAnimations();
     }
 
     void FixedUpdate()
     {
-        checkGrounded();
+        if (playerTransform == null) return;
 
-        // move only if is grounded and player was detected
-        if (!isGrounded || playerTransform == null) return;
+        checkCurrentDirection();
 
-        float distanceFromPlayer = playerTransform.position.x - transform.position.x;
-        currentDirection = Mathf.Sign(distanceFromPlayer);
-        distanceFromPlayer = Mathf.Abs(distanceFromPlayer);
-
-        checkNearEdge(currentDirection);
-
-        float acceptableDistance = chasingPlayer ? minimumDistanceFromPlayer : maximumDistanceFromPlayer;
-
-        // stop moving when near edge or too close to player
-        if (isNearEdge || distanceFromPlayer <= acceptableDistance)
-        {
-            objectRigidbody.velocity = new Vector2(0f, objectRigidbody.velocity.y);
-            chasingPlayer = false;
-            return;
-        } else if (distanceFromPlayer > acceptableDistance)
-        {
-            chasingPlayer = true;
+        switch (currentAIState) {
+            case AIState.Idle:
+                doIdleState();
+                break;
+            case AIState.Chasing:
+                doChasingState();
+                break;
+            case AIState.Shooting: case AIState.Dead:
+                break;
         }
-
-        float movementVelocity = movementSpeed * currentDirection;
-
-        objectRigidbody.velocity = new Vector2(movementVelocity, objectRigidbody.velocity.y);
     }
 
     void OnTriggerEnter2D(Collider2D collider)
@@ -93,23 +100,12 @@ public class PurpleEnemy : MonoBehaviour
         if (collider.gameObject.name == "Player" && playerTransform == null)
         {
             playerTransform = collider.gameObject.transform;
-            chasingPlayer = true;
         }
     }
 
-    void OnTriggerExit2D(Collider2D collider)
+    private void checkNearEdge()
     {
-        // detect player exiting range and "disable" enemy movement
-        if (collider.gameObject.name == "Player" && playerTransform != null)
-        {
-            playerTransform = null;
-            chasingPlayer = false;
-        }
-    }
-
-    private void checkNearEdge(float xDirection)
-    {
-        float xDistance = Mathf.Sign(xDirection) * (distanceToEdge + boxCollider.bounds.extents.x);
+        float xDistance = Mathf.Sign(currentDirection) * (distanceToEdge + boxCollider.bounds.extents.x);
         Vector2 origin = boxCollider.bounds.center + new Vector3(xDistance, -boxCollider.bounds.extents.y - edgeRaycastDistance, 0f);
 
         RaycastHit2D raycastHit = Physics2D.Raycast(origin, Vector2.down, edgeRaycastDistance * 2f, groundLayer);
@@ -125,8 +121,152 @@ public class PurpleEnemy : MonoBehaviour
         isGrounded = (raycastHit.collider != null);
     }
 
-    private void shoot(float xDirection)
+    private void checkShouldShoot()
+    {
+        Vector2 directionToPlayer = playerTransform.position - transform.position;
+        LayerMask notCurrentLayer = ~(1 << gameObject.layer);
+
+        RaycastHit2D raycastHit = Physics2D.Raycast(boxCollider.bounds.center, directionToPlayer, 
+                shootDistance, notCurrentLayer);
+
+        shouldShoot = (raycastHit.collider != null && raycastHit.collider.gameObject.name == "Player");
+    }
+
+    private void shoot()
     {
         animator.SetTrigger("shoot");
+        muzzleFlashAnimator.SetTrigger("muzzleFlash");
+
+        GameObject projectileShot = Instantiate(projectile) as GameObject;
+        projectileShot.GetComponent<BlasterProjectile>().setCurrentDirection(currentDirection);
+        projectileShot.transform.position = projectile.transform.position;
+        projectileShot.SetActive(true);
+    }
+
+    private void doIdleState()
+    {
+        // transition to shooting state if inside shoot distance
+        checkShouldShoot();
+        if (shouldShoot)
+        {
+            stopMoving();
+            currentAIState = AIState.Shooting;
+            return;
+        }
+
+        float distanceFromPlayer = Mathf.Abs(playerTransform.position.x - transform.position.x);
+
+        // transition to chasing state if player farther than chase distance
+        if (distanceFromPlayer > chaseDistance)
+        {
+            currentAIState = AIState.Chasing;
+            doChasingState();
+        }
+    }
+
+    private void doChasingState()
+    {
+        // transition to shooting state if inside shoot distance
+        checkShouldShoot();
+        if (shouldShoot)
+        {
+            stopMoving();
+            currentAIState = AIState.Shooting;
+            return;
+        }
+
+        float distanceFromPlayer = Mathf.Abs(playerTransform.position.x - transform.position.x);
+
+        // transition to idle state if within target distance
+        if (distanceFromPlayer <= targetDistance)
+        {
+            stopMoving();
+            currentAIState = AIState.Idle;
+            return;
+        }
+
+        checkGrounded();
+        if (!isGrounded) return;
+
+        checkNearEdge();
+        if (isNearEdge)
+        {
+            stopMoving();
+            return;
+        }
+
+        float movementVelocity = movementSpeed * currentDirection;
+        objectRigidbody.velocity = new Vector2(movementVelocity, objectRigidbody.velocity.y);
+    }
+
+    private void doShootingState()
+    {
+        // transition if outside shoot distance
+        checkShouldShoot();
+        if (!shouldShoot)
+        {
+            float distanceFromPlayer = Mathf.Abs(playerTransform.position.x - transform.position.x);
+
+            if (distanceFromPlayer < chaseDistance)
+            {
+                // transition to chasing state if farther than chase distance
+                currentAIState = AIState.Chasing;
+            }
+            else
+            {
+                // transitionn to idle state otherwise
+                stopMoving();
+                currentAIState = AIState.Idle;
+            }
+
+            return;
+        }
+
+        if (shootCooldownRemaining > 0f) return;
+
+        shoot();
+        shootCooldownRemaining = shootCooldown;
+    }
+
+    private void transitionToDeadState()
+    {
+        // no transitions to other states
+        // play death animation
+        animator.SetTrigger("death");
+        currentAIState = AIState.Dead;
+    }
+
+    private void handleAnimations()
+    {
+        if (currentAIState == AIState.Dead) return;
+
+        animator.SetFloat("speed", Mathf.Abs(objectRigidbody.velocity.x));
+
+        float velocityDirection = currentDirection;
+        float scaleDirection = Mathf.Sign(transform.localScale.x);
+
+        // flip sprite based on velocity direction
+        if (velocityDirection != scaleDirection && playerTransform)
+        {
+            transform.localScale = new Vector3(transform.localScale.x * -1f, transform.localScale.y, transform.localScale.z);
+        }
+    }
+
+    private void checkCurrentDirection()
+    {
+        currentDirection = Mathf.Sign(playerTransform.position.x - transform.position.x);
+    }
+
+    private void stopMoving()
+    {
+        objectRigidbody.velocity = new Vector2(0f, objectRigidbody.velocity.y);
+    }
+
+    private void handleShootCooldown()
+    {
+        if (shootCooldownRemaining > 0f)
+        {
+            shootCooldownRemaining -= Time.deltaTime;
+        }
     }
 }
