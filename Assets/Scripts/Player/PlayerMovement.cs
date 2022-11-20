@@ -9,9 +9,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpPower;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
+
     private Rigidbody2D body;
     private Animator anim;
     private BoxCollider2D boxCollider;
+
     private float wallJumpCooldown;
     private float horizontalInput;
 
@@ -29,9 +31,9 @@ public class PlayerMovement : MonoBehaviour
 
         //Flip player when moving left-right
         if (horizontalInput > 0.01f)
-            transform.localScale = new Vector3(3, 3, 3);
+            transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
         else if (horizontalInput < -0.01f)
-            transform.localScale = new Vector3(-3, 3, 3);
+            transform.localScale = new Vector3(-2.5f, 2.5f, 2.5f);
 
         //Set animator parameters
         anim.SetBool("run", horizontalInput != 0);
