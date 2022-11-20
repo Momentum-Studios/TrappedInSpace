@@ -75,3 +75,6 @@ crashlytics-build.properties
 
 # Other mono files
 mono_crash.*
+
+# MacOS files
+.DS_Store
