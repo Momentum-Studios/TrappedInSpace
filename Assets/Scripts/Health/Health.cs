@@ -1,7 +1,7 @@
 
 using System.Collections;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Health : MonoBehaviour
 {
     
@@ -11,6 +11,7 @@ public class Health : MonoBehaviour
     public float currentHealth { get; private set; }
     private bool dead;
     private Animator anim;
+    public Image HealthSlider;
     
     [Header("iFrames")]
     [SerializeField] private float iFramesDuration;
@@ -30,7 +31,7 @@ public class Health : MonoBehaviour
     public void TakeDamage(float _damage) 
     {
         currentHealth = Mathf.Clamp(currentHealth - _damage, 0, StartingHealth);
-
+        UpdateHP();
         if (currentHealth > 0)
         {
 
@@ -62,6 +63,7 @@ public class Health : MonoBehaviour
     public void AddHealth(float _value)
     { 
         currentHealth = Mathf.Clamp(currentHealth + _value, 0, StartingHealth);
+        UpdateHP();
     }
 
     private IEnumerator Invulnerability()
@@ -77,5 +79,9 @@ public class Health : MonoBehaviour
 
         }
         Physics2D.IgnoreLayerCollision(8, 9, false);
+    }
+
+    public void UpdateHP(){
+        HealthSlider.fillAmount = ((100/StartingHealth) * currentHealth) / 100;
     }
 }
