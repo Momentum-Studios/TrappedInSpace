@@ -24,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D body;
     private Animator anim;
     private BoxCollider2D boxCollider;
-    private float wallJumpCooldown;
     private float horizontalInput;
     private float boostTimer;
     private bool isBoosting;
@@ -66,7 +65,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (onWall())
         {
-            body.gravityScale = 0; 
+            
+            body.gravityScale = 28;
             body.velocity = Vector2.zero;
         }
         else
@@ -89,69 +89,65 @@ public class PlayerMovement : MonoBehaviour
 
             if (boostTimer >= 4)
             {
-                speed = 4f;
+                speed = 5f;
 
-            if (boostTimer >= 3)
-            {
-                speed += -3;
-
-                boostTimer = 0;
-                isBoosting = false;
+                if (boostTimer >= 3)
+                {
+                    boostTimer = 0;
+                    isBoosting = false;
+                }
             }
         }
     }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "SpeedBoost")
-        {
-            isBoosting = true;
-            speed *= 2f;
-            speed += 3;
-
-            Destroy(other.gameObject);
+            if (other.tag == "SpeedBoost")
+            {
+                isBoosting = true;
+                speed *= 1.5f;
+                Destroy(other.gameObject);
+            }
         }
-    }
 
-    private void Jump()
-    {
-        if (coyoteCounter <= 0 && !onWall() && jumpCounter <= 0) return;
-        else
+        private void Jump()
         {
-            if (isGrounded())
-                body.velocity = new Vector2(body.velocity.x, jumpPower);
+            if (coyoteCounter <= 0 && !onWall() && jumpCounter <= 0) return;
             else
             {
-                //If not on the ground and coyote counter bigger than 0 do a normal jump
-                if (coyoteCounter > 0)
+                if (isGrounded())
                     body.velocity = new Vector2(body.velocity.x, jumpPower);
                 else
                 {
-                    if (jumpCounter > 0) //If we have extra jumps then jump and decrease the jump counter
-                    {
+                    //If not on the ground and coyote counter bigger than 0 do a normal jump
+                    if (coyoteCounter > 0)
                         body.velocity = new Vector2(body.velocity.x, jumpPower);
-                        jumpCounter--;
+                    else
+                    {
+                        if (jumpCounter > 0) //If we have extra jumps then jump and decrease the jump counter
+                        {
+                            body.velocity = new Vector2(body.velocity.x, jumpPower);
+                            jumpCounter--;
+                        }
                     }
                 }
+
+                //Reset coyote counter to 0 to avoid double jumps
+                coyoteCounter = 0;
             }
-
-            //Reset coyote counter to 0 to avoid double jumps
-            coyoteCounter = 0;
         }
-    }
 
-    private bool isGrounded()
-    {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
-        return raycastHit.collider != null;
-    }
-    private bool onWall()
-    {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, new Vector2(transform.localScale.x, 0), 0.1f, wallLayer);
-        return raycastHit.collider != null;
-    }
-    public bool canAttack()
-    {
-        return horizontalInput == 0 && isGrounded() && !onWall();
-    }
+        private bool isGrounded()
+        {
+            RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
+            return raycastHit.collider != null;
+        }
+        private bool onWall()
+        {
+            RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, new Vector2(transform.localScale.x, 0), 0.1f, wallLayer);
+            return raycastHit.collider != null;
+        }
+        public bool canAttack()
+        {
+            return horizontalInput == 0 && isGrounded() && !onWall();
+        }
 }

@@ -51,7 +51,7 @@ public class Health : MonoBehaviour
             damageSoundEffect.Play();
             anim.SetTrigger("hurt");
             StartCoroutine(Invunerability());
-            //SoundManager.instance.PlaySound(hurtSound);
+ 
         }
         else
         {
@@ -60,12 +60,12 @@ public class Health : MonoBehaviour
                 //Deactivate all attached component classes
                 foreach (Behaviour component in components)
                     component.enabled = false;
+
                 deathSoundEffect.Play();
-                //anim.SetBool("grounded", true);
+                anim.SetBool("grounded", true);
                 anim.SetTrigger("die");
 
                 dead = true;
-                //SoundManager.instance.PlaySound(deathSound);
             }
         }
     }
