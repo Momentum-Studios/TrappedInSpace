@@ -14,10 +14,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private int extraJumps;
     private int jumpCounter;
 
-    [Header("Wall Jumping")]
-    [SerializeField] private float wallJumpX; //Horizontal wall jump force
-    [SerializeField] private float wallJumpY; //Vertical wall jump force
-
     [Header("Layers")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
@@ -65,12 +61,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (onWall())
         {
-            body.gravityScale = 0;
+            body.gravityScale = 0; 
             body.velocity = Vector2.zero;
         }
         else
         {
-            body.gravityScale = 7;
+            body.gravityScale = 4;
             body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
 
             if (isGrounded())
@@ -85,9 +81,9 @@ public class PlayerMovement : MonoBehaviour
         if (isBoosting)
         {
             boostTimer += Time.deltaTime;
-            if (boostTimer >= 5)
+            if (boostTimer >= 4)
             {
-                speed = 8f;
+                speed = 4f;
                 boostTimer = 0;
                 isBoosting = false;
             }
@@ -99,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
         if (other.tag == "SpeedBoost")
         {
             isBoosting = true;
-            speed *= 2;
+            speed *= 2f;
             Destroy(other.gameObject);
         }
     }
@@ -107,12 +103,6 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
     {
         if (coyoteCounter <= 0 && !onWall() && jumpCounter <= 0) return;
-        //If coyote counter is 0 or less and not on the wall and don't have any extra jumps don't do anything
-
-        //SoundManager.instance.PlaySound(jumpSound);
-
-        if (onWall())
-            WallJump();
         else
         {
             if (isGrounded())
@@ -135,12 +125,6 @@ public class PlayerMovement : MonoBehaviour
             //Reset coyote counter to 0 to avoid double jumps
             coyoteCounter = 0;
         }
-    }
-
-    private void WallJump()
-    {
-        body.AddForce(new Vector2(-Mathf.Sign(transform.localScale.x) * wallJumpX, wallJumpY));
-        wallJumpCooldown = 0;
     }
 
     private bool isGrounded()
