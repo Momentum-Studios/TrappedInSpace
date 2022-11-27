@@ -28,6 +28,7 @@ public class PurpleEnemy : MonoBehaviour
     [SerializeField] private float edgeRaycastDistance;
     [SerializeField] private GameObject muzzleFlash;
     [SerializeField] private GameObject projectile;
+    [SerializeField] private GameObject projectilePoint;
 
     [SerializeField] private AudioClip deathSound;
 
@@ -144,8 +145,8 @@ public class PurpleEnemy : MonoBehaviour
         muzzleFlashAnimator.SetTrigger("muzzleFlash");
 
         GameObject projectileShot = Instantiate(projectile) as GameObject;
-        projectileShot.GetComponent<BlasterProjectile>().setCurrentDirection(currentDirection);
-        projectileShot.transform.position = projectile.transform.position;
+        projectileShot.GetComponent<Projectile>().SetDirection(currentDirection);
+        projectileShot.transform.position = projectilePoint.transform.position;
         projectileShot.SetActive(true);
     }
 
