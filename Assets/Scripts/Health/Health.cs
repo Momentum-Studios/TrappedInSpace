@@ -24,6 +24,8 @@ public class Health : MonoBehaviour
     [SerializeField] private AudioClip deathSound;
     [SerializeField] private AudioClip hurtSound;
 
+    public Image HealthSlider;
+
     private void Awake()
     {
         currentHealth = startingHealth;
@@ -56,7 +58,7 @@ public class Health : MonoBehaviour
                 foreach (Behaviour component in components)
                     component.enabled = false;
 
-                anim.SetBool("grounded", true);
+                //anim.SetBool("grounded", true);
                 anim.SetTrigger("die");
 
                 dead = true;
