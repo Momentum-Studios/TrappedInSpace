@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - SpeedBoost
+  - Blaster
   layers:
   - Default
   - TransparentFX

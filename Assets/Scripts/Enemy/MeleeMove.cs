@@ -42,10 +42,14 @@ public class MeleeMove : MonoBehaviour
         }
         animator.SetFloat("Distance", distance);
 
-        if(distance < 1.5)
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Blaster")
         {
-            speed = 0;
             animator.SetBool("Alive", false);
-        }    
+            speed = 0;
+        }
     }
 }

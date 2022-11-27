@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
 
     private float wallJumpCooldown;
     private float horizontalInput;
+    private float boostTimer;
+    private bool isBoosting;
 
     private void Awake()
     {
@@ -54,6 +56,27 @@ public class PlayerMovement : MonoBehaviour
         }
         else
             wallJumpCooldown += Time.deltaTime;
+
+        if (isBoosting)
+        {
+            boostTimer += Time.deltaTime;
+            if (boostTimer >= 5)
+            {
+                speed = 8f;
+                boostTimer = 0;
+                isBoosting = false;
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "SpeedBoost")
+        {
+            isBoosting = true;
+            speed *= 2;
+            Destroy(other.gameObject);
+        }
     }
 
     private void Jump()
