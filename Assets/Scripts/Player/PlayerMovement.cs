@@ -29,6 +29,11 @@ public class PlayerMovement : MonoBehaviour
     private float boostTimer;
     private bool isBoosting;
 
+    private void Start()
+    {
+        boostTimer = 0;
+        isBoosting = false;
+    }
     private void Awake()
     {
         //Grab references for rigidbody and animator from object
@@ -81,9 +86,15 @@ public class PlayerMovement : MonoBehaviour
         if (isBoosting)
         {
             boostTimer += Time.deltaTime;
+
             if (boostTimer >= 4)
             {
                 speed = 4f;
+
+            if (boostTimer >= 3)
+            {
+                speed += -3;
+
                 boostTimer = 0;
                 isBoosting = false;
             }
@@ -96,6 +107,8 @@ public class PlayerMovement : MonoBehaviour
         {
             isBoosting = true;
             speed *= 2f;
+            speed += 3;
+
             Destroy(other.gameObject);
         }
     }
