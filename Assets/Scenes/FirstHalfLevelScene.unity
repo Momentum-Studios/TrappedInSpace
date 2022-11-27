@@ -132,7 +132,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6514363400226421829, guid: 902b542ca1389d145bc491ec2d83ede8, type: 3}
       propertyPath: m_Name
-      value: speedboost
+      value: Speed Boost
       objectReference: {fileID: 0}
     - target: {fileID: 6514363400226421830, guid: 902b542ca1389d145bc491ec2d83ede8, type: 3}
       propertyPath: m_RootOrder
