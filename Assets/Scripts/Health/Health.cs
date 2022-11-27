@@ -1,4 +1,3 @@
-
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,8 +20,10 @@ public class Health : MonoBehaviour
     private bool invulnerable;
 
     [Header("Death Sound")]
-    [SerializeField] private AudioClip deathSound;
-    [SerializeField] private AudioClip hurtSound;
+    [SerializeField] private AudioSource deathSoundEffect;
+    [SerializeField] private AudioSource damageSoundEffect;
+    [SerializeField] private AudioSource addHealthSoundEffect;
+
 
     public Image HealthSlider;
 
@@ -43,9 +44,11 @@ public class Health : MonoBehaviour
     {
         if (invulnerable) return;
         currentHealth = Mathf.Clamp(currentHealth - _damage, 0, startingHealth);
+        UpdateHP();
 
         if (currentHealth > 0)
         {
+            damageSoundEffect.Play();
             anim.SetTrigger("hurt");
             StartCoroutine(Invunerability());
             //SoundManager.instance.PlaySound(hurtSound);
@@ -57,7 +60,7 @@ public class Health : MonoBehaviour
                 //Deactivate all attached component classes
                 foreach (Behaviour component in components)
                     component.enabled = false;
-
+                deathSoundEffect.Play();
                 //anim.SetBool("grounded", true);
                 anim.SetTrigger("die");
 
@@ -68,7 +71,9 @@ public class Health : MonoBehaviour
     }
     public void AddHealth(float _value)
     {
+        addHealthSoundEffect.Play();
         currentHealth = Mathf.Clamp(currentHealth + _value, 0, startingHealth);
+        UpdateHP();
     }
     private IEnumerator Invunerability()
     {
@@ -87,5 +92,9 @@ public class Health : MonoBehaviour
     private void Deactivate()
     {
         gameObject.SetActive(false);
+    }
+
+    public void UpdateHP(){
+        HealthSlider.fillAmount=((100/startingHealth) * (currentHealth))/100;
     }
 }
