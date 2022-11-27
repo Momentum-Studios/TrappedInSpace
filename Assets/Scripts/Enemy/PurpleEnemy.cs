@@ -29,12 +29,15 @@ public class PurpleEnemy : MonoBehaviour
     [SerializeField] private GameObject muzzleFlash;
     [SerializeField] private GameObject projectile;
 
+    [SerializeField] private AudioClip deathSound;
+
     private Rigidbody2D objectRigidbody;
     private BoxCollider2D boxCollider;
     private Animator animator;
     private Animator muzzleFlashAnimator;
     private Transform playerTransform;
     private AIState currentAIState;
+    private AudioSource audioSource;
 
     private float currentDirection;
     private float shootCooldownRemaining;
@@ -57,6 +60,7 @@ public class PurpleEnemy : MonoBehaviour
         muzzleFlashAnimator = muzzleFlash.GetComponent<Animator>();
         currentAIState = AIState.Idle;
         shootCooldownRemaining = shootCooldown;
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -92,6 +96,8 @@ public class PurpleEnemy : MonoBehaviour
             case AIState.Shooting: case AIState.Dead:
                 break;
         }
+
+        print(objectRigidbody.velocity.x + " " + objectRigidbody.velocity.y);
     }
 
     void OnTriggerEnter2D(Collider2D collider)
@@ -234,6 +240,7 @@ public class PurpleEnemy : MonoBehaviour
         // play death animation
         animator.SetTrigger("death");
         currentAIState = AIState.Dead;
+        audioSource.PlayOneShot(deathSound);
     }
 
     private void handleAnimations()

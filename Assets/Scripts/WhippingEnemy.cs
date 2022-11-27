@@ -18,6 +18,8 @@ public class WhippingEnemy : MonoBehaviour
 {
     [SerializeField] private float targetDistance;
     [SerializeField] private float whipCooldown;
+    [SerializeField] private AudioClip whipSound;
+    [SerializeField] private AudioClip deathSound;
 
     private MoveController moveController;
     private ColliderTriggerHandler whipTrigger;
@@ -27,6 +29,7 @@ public class WhippingEnemy : MonoBehaviour
     private AIState currentAIState;
     private float whipCooldownRemaining;
     private bool isWhipping;
+    private AudioSource audioSource;
 
     private enum AIState
     {
@@ -43,6 +46,7 @@ public class WhippingEnemy : MonoBehaviour
         currentAIState = AIState.Idle;
         animator = GetComponent<Animator>();
         rigidbody2d = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -156,6 +160,7 @@ public class WhippingEnemy : MonoBehaviour
     {
         animator.SetTrigger("death");
         currentAIState = AIState.Dead;
+        audioSource.PlayOneShot(deathSound);
     }
 
     // handle setting the different floats for the animation controller 
@@ -179,6 +184,7 @@ public class WhippingEnemy : MonoBehaviour
         whipCooldownRemaining = whipCooldown;
         animator.SetTrigger("whip");
         isWhipping = true;
+        audioSource.PlayOneShot(whipSound);
     }
 
     // subtract from the whip cooldown every update
