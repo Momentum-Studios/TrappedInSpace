@@ -5,7 +5,7 @@
  * class: CS 4700 - Game Development
  * 
  * assignment: Program 4
- * date last modified: 11/12/2022
+ * date last modified: 11/26/2022
  * 
  * purpose: This script controls the movement, shooting, animations, and other
  * functions of the Purple Blaster Enemy.

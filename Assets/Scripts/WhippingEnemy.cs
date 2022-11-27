@@ -5,7 +5,7 @@
  * class: CS 4700 - Game Development
  * 
  * assignment: Program 4
- * date last modified: 11/17/2022
+ * date last modified: 11/26/2022
  * 
  * purpose: This script controls the movement, animations, melee, and other
  * functions of the Whipping Enemy
