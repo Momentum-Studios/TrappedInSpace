@@ -24956,7 +24956,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!1 &797020064
 GameObject:
@@ -25367,6 +25367,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5239530996397306696, guid: 993bd5d527fa041f7a5964a4418cd2bb, type: 3}
+      propertyPath: jumpPower
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5239530996397306696, guid: 993bd5d527fa041f7a5964a4418cd2bb, type: 3}
       propertyPath: wallJumpX
       value: 1000
       objectReference: {fileID: 0}
@@ -25376,11 +25380,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5239530996397306696, guid: 993bd5d527fa041f7a5964a4418cd2bb, type: 3}
       propertyPath: coyoteTime
-      value: 2.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5239530996397306696, guid: 993bd5d527fa041f7a5964a4418cd2bb, type: 3}
       propertyPath: extraJumps
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5239530996397306696, guid: 993bd5d527fa041f7a5964a4418cd2bb, type: 3}
       propertyPath: wallLayer.m_Bits
@@ -25389,6 +25393,14 @@ PrefabInstance:
     - target: {fileID: 5239530996397306696, guid: 993bd5d527fa041f7a5964a4418cd2bb, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 5239530996397306698, guid: 993bd5d527fa041f7a5964a4418cd2bb, type: 3}
+      propertyPath: attackCoolDown
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5239530996397306700, guid: 993bd5d527fa041f7a5964a4418cd2bb, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5239530996397306701, guid: 993bd5d527fa041f7a5964a4418cd2bb, type: 3}
       propertyPath: m_RootOrder
@@ -25433,6 +25445,10 @@ PrefabInstance:
     - target: {fileID: 5239530996397306701, guid: 993bd5d527fa041f7a5964a4418cd2bb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5239530996397306702, guid: 993bd5d527fa041f7a5964a4418cd2bb, type: 3}
+      propertyPath: m_GravityScale
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5239530996397306803, guid: 993bd5d527fa041f7a5964a4418cd2bb, type: 3}
       propertyPath: m_Name
