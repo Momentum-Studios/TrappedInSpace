@@ -111,4 +111,11 @@ public class Health : MonoBehaviour
     public void UpdateHP(){
         HealthSlider.fillAmount=((100/startingHealth) * (currentHealth))/100;
     }
+
+    private void OnTriggerEnter2D(Collider2D c){
+        //Make the player take 10 damage when they fell to death traps
+        if (c.tag == "DeadCollision"){
+            TakeDamage(10);
+        }
+    }
 }
