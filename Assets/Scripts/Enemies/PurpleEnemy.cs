@@ -56,6 +56,7 @@ public class PurpleEnemy : MonoBehaviour
         Dead
     }
 
+    // setup purple enemy script
     void Start()
     {
         health = GetComponent<EnemyHealth>();
@@ -68,10 +69,13 @@ public class PurpleEnemy : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    // calculate the AI's next move in the state
+    // machine
     void Update()
     {
         if (currentAIState == AIState.Dead) return;
 
+        // check if should be dead
         if (health.currentHealth < 0.001)
             transitionToDeadState();
 
@@ -79,6 +83,7 @@ public class PurpleEnemy : MonoBehaviour
 
         handleShootCooldown();
 
+        // handle state machine
         switch (currentAIState) {
             case AIState.Shooting:
                 doShootingState();
@@ -90,6 +95,7 @@ public class PurpleEnemy : MonoBehaviour
         handleAnimations();
     }
 
+    // handle AI for moving and idle states
     void FixedUpdate()
     {
         if (currentAIState == AIState.Dead) return;
@@ -98,6 +104,7 @@ public class PurpleEnemy : MonoBehaviour
 
         checkCurrentDirection();
 
+        // handle state machine
         switch (currentAIState) {
             case AIState.Idle:
                 doIdleState();
@@ -108,10 +115,10 @@ public class PurpleEnemy : MonoBehaviour
             case AIState.Shooting: case AIState.Dead:
                 break;
         }
-
-        print(objectRigidbody.velocity.x + " " + objectRigidbody.velocity.y);
     }
 
+    // activate this enemy once it detects the player within a 
+    // certain range
     void OnTriggerEnter2D(Collider2D collider)
     {
         // detect player within circle collider trigger
@@ -121,6 +128,7 @@ public class PurpleEnemy : MonoBehaviour
         }
     }
 
+    // check if enemy is near an edge
     private void checkNearEdge()
     {
         float xDistance = Mathf.Sign(currentDirection) * (distanceToEdge + boxCollider.bounds.extents.x);
@@ -131,6 +139,7 @@ public class PurpleEnemy : MonoBehaviour
         isNearEdge = (raycastHit.collider == null);
     }
 
+    // check if enemy is grounded
     private void checkGrounded()
     {
         RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size,
@@ -139,6 +148,8 @@ public class PurpleEnemy : MonoBehaviour
         isGrounded = (raycastHit.collider != null);
     }
 
+    // check if enemy has clear line of sight to player and 
+    // is within range
     private void checkShouldShoot()
     {
         Vector2 directionToPlayer = playerTransform.position - transform.position;
@@ -150,6 +161,7 @@ public class PurpleEnemy : MonoBehaviour
         shouldShoot = (raycastHit.collider != null && raycastHit.collider.gameObject.name == "Player");
     }
 
+    // shoot left or right depending on current direction
     private void shoot()
     {
         animator.SetTrigger("shoot");
@@ -164,6 +176,7 @@ public class PurpleEnemy : MonoBehaviour
         projectileShot.SetActive(true);
     }
 
+    // perform the idle state in the AI state machine
     private void doIdleState()
     {
         // transition to shooting state if inside shoot distance
@@ -185,6 +198,8 @@ public class PurpleEnemy : MonoBehaviour
         }
     }
 
+    // chase the player while in the chasing state in the
+    // AI state machine
     private void doChasingState()
     {
         // transition to shooting state if inside shoot distance
@@ -216,10 +231,12 @@ public class PurpleEnemy : MonoBehaviour
             return;
         }
 
+        // apply movement to rigidbody
         float movementVelocity = movementSpeed * currentDirection;
         objectRigidbody.velocity = new Vector2(movementVelocity, objectRigidbody.velocity.y);
     }
 
+    // shoot at the player while in the shooting state
     private void doShootingState()
     {
         // transition if outside shoot distance
@@ -249,6 +266,8 @@ public class PurpleEnemy : MonoBehaviour
         shootCooldownRemaining = shootCooldown;
     }
 
+    // transition to the dead state when
+    // the enemy dies
     private void transitionToDeadState()
     {
         // no transitions to other states
@@ -259,6 +278,7 @@ public class PurpleEnemy : MonoBehaviour
         objectRigidbody.simulated = false;
     }
 
+    // handle the animations for the enemy
     private void handleAnimations()
     {
         if (currentAIState == AIState.Dead) return;
@@ -275,16 +295,21 @@ public class PurpleEnemy : MonoBehaviour
         }
     }
 
+    // check the current direction the enemy should
+    // be facing
     private void checkCurrentDirection()
     {
         currentDirection = Mathf.Sign(playerTransform.position.x - transform.position.x);
     }
 
+    // reset velocity in the x-axis to 0
     private void stopMoving()
     {
         objectRigidbody.velocity = new Vector2(0f, objectRigidbody.velocity.y);
     }
 
+    // subtract delta time from the cooldown remaining
+    // every frame
     private void handleShootCooldown()
     {
         if (shootCooldownRemaining > 0f)

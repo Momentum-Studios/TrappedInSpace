@@ -1,5 +1,5 @@
 /**
- * file: HealthCollectible.cs
+ * file: Health.cs
  * studio: Momentum Studios
  * authors: Justin Kim
  * class: CS 4700 - Game Development
@@ -21,11 +21,13 @@ public class Health : MonoBehaviour
     public float currentHealth { get; protected set; }
     protected bool dead;
 
+    // subtract damage from current health
     public virtual void TakeDamage(float _damage)
     {
         currentHealth = Mathf.Clamp(currentHealth - _damage, 0, startingHealth);
     }
 
+    // add health to current health
     public virtual void AddHealth(float _value)
     {
         currentHealth = Mathf.Clamp(currentHealth + _value, 0, startingHealth);

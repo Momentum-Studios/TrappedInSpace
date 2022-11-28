@@ -1,5 +1,5 @@
 /**
- * file: HealthCollectible.cs
+ * file: PlayerHealth.cs
  * studio: Momentum Studios
  * authors: Daniel Rodriguez, Daniel Nam, Justin Kim
  * class: CS 4700 - Game Development
@@ -34,19 +34,25 @@ public class PlayerHealth : Health
 
     public Image HealthSlider;
 
+    // setup script by getting components
+    // and setting current health
     private void Awake()
     {
         currentHealth = startingHealth;
         anim = GetComponent<Animator>();
         spriteRend = GetComponent<SpriteRenderer>();
     }
+
+    // test if health bar works by pressing E,
+    // you should see health decrease
     private void Update()
     {
-        //Test if the health bar works by pressing E, you should see health disapear
         if (Input.GetKeyDown(KeyCode.E))
             TakeDamage(1);
     }
 
+    // handles taking damage, playing sounds for damage
+    // and the corresponding animation, and gives player invulnerability
     public override void TakeDamage(float _damage)
     {
         
@@ -78,6 +84,7 @@ public class PlayerHealth : Health
         }
     }
 
+    // handles adding health and playing sound
     public override void AddHealth(float _value)
     {
         addHealthSoundEffect.Play();
@@ -85,10 +92,13 @@ public class PlayerHealth : Health
         UpdateHP();
     }
 
+    // subroutine to handle invulnerability
     private IEnumerator Invunerability()
     {
         invulnerable = true;
+        // ignore other layers
         Physics2D.IgnoreLayerCollision(10, 11, true);
+        // flash the sprite
         for (int i = 0; i < numberOfFlashes; i++)
         {
             spriteRend.color = new Color(1, 0, 0, 0.5f);
@@ -96,19 +106,23 @@ public class PlayerHealth : Health
             spriteRend.color = Color.white;
             yield return new WaitForSeconds(iFramesDuration / (numberOfFlashes * 2));
         }
+        // stop being invulnerable
         Physics2D.IgnoreLayerCollision(10, 11, false);
         invulnerable = false;
     }
 
+    // deactivate the game object (player)
     private void Deactivate()
     {
         gameObject.SetActive(false);
     }
 
+    // update the health in the health slider
     private void UpdateHP(){
         HealthSlider.fillAmount=((100/startingHealth) * (currentHealth))/100;
     }
 
+    // check for death by entering a "DeadCollision"
     private void OnTriggerEnter2D(Collider2D c){
         //Make the player take 10 damage when they fell to death traps
         if (c.tag == "DeadCollision"){
