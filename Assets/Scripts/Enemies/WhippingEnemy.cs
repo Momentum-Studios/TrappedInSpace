@@ -207,8 +207,8 @@ public class WhippingEnemy : MonoBehaviour
     // and when damage should be applied to the player (if within trigger collider)
     private void whipEvent()
     {
-        // check if player is within whip range and cooldown has expired
-        if (!whipTrigger.isInside || whipCooldownRemaining > 0f) return;
+        // check if player is within whip range
+        if (!whipTrigger.isInside) return;
 
         whipTrigger.gameObj.GetComponent<PlayerHealth>().TakeDamage(damageAmount);
     }
