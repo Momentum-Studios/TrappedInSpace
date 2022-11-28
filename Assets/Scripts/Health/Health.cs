@@ -1,3 +1,17 @@
+/**
+ * file: HealthCollectible.cs
+ * studio: Momentum Studios
+ * authors: Daniel Rodriguez, Daniel Nam
+ * class: CS 4700 - Game Development
+ * 
+ * Assignment: Program 4
+ * Date last modified: 11/27/2022
+ * 
+ * Purpose: Gives players health that can be given, taken or reset when taking damage or picking up health boosts
+ * 
+ */
+
+
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +33,7 @@ public class Health : MonoBehaviour
     [SerializeField] private Behaviour[] components;
     private bool invulnerable;
 
-    [Header("Death Sound")]
+    [Header("Audio Source")]
     [SerializeField] private AudioSource deathSoundEffect;
     [SerializeField] private AudioSource damageSoundEffect;
     [SerializeField] private AudioSource addHealthSoundEffect;

@@ -1,3 +1,15 @@
+/**
+ * file: HealthCollectible.cs
+ * studio: Momentum Studios
+ * authors: Daniel Rodriguez, Matthew Chu
+ * class: CS 4700 - Game Development
+ * 
+ * Assignment: Program 4
+ * date last modified: 11/17/2022
+ * 
+ * Purpose: Create a player game object that has the ability to interact with the game world. Running, Jumping, Take Damage etc.
+ * 
+ */
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -6,9 +18,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
 
-    [Header("Coyote Time")]
-    [SerializeField] private float coyoteTime; //How much time the player can hang in the air before jumping
-    private float coyoteCounter; //How much time passed since the player ran off the edge
+    [Header("Hang Time")]
+    [SerializeField] private float hangTime; //How much time the player can hang in the air before jumping
+    private float hangCounter; //How much time passed since the player ran off the edge
 
     [Header("Multiple Jumps")]
     [SerializeField] private int extraJumps;
@@ -18,15 +30,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
 
-    [Header("Sounds")]
-    [SerializeField] private AudioClip jumpSound;
+    [Header("Collectibles")]
+    [SerializeField] private float boostTimer;
+
+    [Header("Audio Source")]
+    [SerializeField] private AudioSource addHealthSoundEffect;
 
     private Rigidbody2D body;
     private Animator anim;
     private BoxCollider2D boxCollider;
+
     private float horizontalInput;
-    private float boostTimer;
     private bool isBoosting;
+
 
     private void Start()
     {
@@ -58,15 +74,13 @@ public class PlayerMovement : MonoBehaviour
         // Jump
         if (Input.GetKeyDown(KeyCode.Space))
             Jump();
-
         //Adjustable jump height
         if (Input.GetKeyUp(KeyCode.Space) && body.velocity.y > 0)
             body.velocity = new Vector2(body.velocity.x, body.velocity.y / 2);
 
         if (onWall())
         {
-            
-            body.gravityScale = 28;
+            body.gravityScale = 25;
             body.velocity = Vector2.zero;
         }
         else
@@ -76,15 +90,16 @@ public class PlayerMovement : MonoBehaviour
 
             if (isGrounded())
             {
-                coyoteCounter = coyoteTime; //Reset coyote counter when on the ground
+                hangCounter = hangTime; //Reset coyote counter when on the ground
                 jumpCounter = extraJumps; //Reset jump counter to extra jump value
             }
             else
-                coyoteCounter -= Time.deltaTime; //Start decreasing coyote counter when not on the ground
+                hangCounter -= Time.deltaTime; //Start decreasing coyote counter when not on the ground
         }
 
         if (isBoosting)
         {
+
             boostTimer += Time.deltaTime;
 
             if (boostTimer >= 4)
@@ -99,27 +114,30 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-            if (other.tag == "SpeedBoost")
-            {
-                isBoosting = true;
-                speed *= 1.5f;
-                Destroy(other.gameObject);
-            }
-        }
-
-        private void Jump()
+        if (collision.tag == "SpeedBoost")
         {
-            if (coyoteCounter <= 0 && !onWall() && jumpCounter <= 0) return;
+            isBoosting = true;
+
+            speed *= 1.5f;
+            Destroy(collision.gameObject);
+        }
+    }
+    
+    private void Jump()
+        {
+            if (hangCounter <= 0 && !onWall() && jumpCounter <= 0) return;
             else
             {
                 if (isGrounded())
                     body.velocity = new Vector2(body.velocity.x, jumpPower);
+
+                    //SoundManager.instance.PlaySound(jumpSound);
                 else
                 {
                     //If not on the ground and coyote counter bigger than 0 do a normal jump
-                    if (coyoteCounter > 0)
+                    if (hangCounter > 0)
                         body.velocity = new Vector2(body.velocity.x, jumpPower);
                     else
                     {
@@ -131,8 +149,8 @@ public class PlayerMovement : MonoBehaviour
                     }
                 }
 
-                //Reset coyote counter to 0 to avoid double jumps
-                coyoteCounter = 0;
+            //Reset coyote counter to 0 to avoid double jumps
+            hangCounter = 0;
             }
         }
 
@@ -146,7 +164,7 @@ public class PlayerMovement : MonoBehaviour
             RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, new Vector2(transform.localScale.x, 0), 0.1f, wallLayer);
             return raycastHit.collider != null;
         }
-        public bool canAttack()
+        public bool canAttack() 
         {
             return horizontalInput == 0 && isGrounded() && !onWall();
         }
