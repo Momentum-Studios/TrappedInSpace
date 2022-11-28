@@ -20,6 +20,7 @@ public class ColliderTriggerHandler : MonoBehaviour
     [SerializeField] private string gameObjectName;
 
     public bool isInside { get; private set; }
+    public GameObject gameObj { get; private set; }
 
     // if target gameobject enters trigger, then isInside = true
     void OnTriggerEnter2D(Collider2D c)
@@ -27,6 +28,7 @@ public class ColliderTriggerHandler : MonoBehaviour
         if (c.gameObject.name == gameObjectName)
         {
             isInside = true;
+            gameObj = c.gameObject;
         }
     }
 

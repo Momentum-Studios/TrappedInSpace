@@ -18,6 +18,8 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float attackCoolDown;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject projectile;
+    [SerializeField] private float damageAmount;
+    [SerializeField] private LayerMask enemyLayer;
 
     private Animator anim;
     private PlayerMovement playerMovement;
@@ -46,7 +48,10 @@ public class PlayerAttack : MonoBehaviour
         cooldownTimer = 0;
 
         GameObject projectileShot = Instantiate(projectile) as GameObject;
-        projectileShot.GetComponent<Projectile>().SetDirection(Mathf.Sign(transform.localScale.x));
+        Projectile p = projectileShot.GetComponent<Projectile>();
+        p.SetDirection(Mathf.Sign(transform.localScale.x));
+        p.setDamage(damageAmount);
+        p.setTargetLayerMask(enemyLayer);
         projectileShot.transform.position = firePoint.position;
         projectileShot.SetActive(true);
     }

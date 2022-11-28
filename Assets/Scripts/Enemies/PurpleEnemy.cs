@@ -5,7 +5,7 @@
  * class: CS 4700 - Game Development
  * 
  * assignment: Program 4
- * date last modified: 11/26/2022
+ * date last modified: 11/28/2022
  * 
  * purpose: This script controls the movement, shooting, animations, and other
  * functions of the Purple Blaster Enemy.
@@ -21,7 +21,9 @@ public class PurpleEnemy : MonoBehaviour
     [SerializeField] private float targetDistance;
     [SerializeField] private float shootDistance;
     [SerializeField] private float shootCooldown;
+    [SerializeField] private float damageAmount;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask targetLayer;
 
     [SerializeField] private float groundedBoxCastDistance;
     [SerializeField] private float distanceToEdge;
@@ -39,6 +41,7 @@ public class PurpleEnemy : MonoBehaviour
     private Transform playerTransform;
     private AIState currentAIState;
     private AudioSource audioSource;
+    private EnemyHealth health;
 
     private float currentDirection;
     private float shootCooldownRemaining;
@@ -55,6 +58,7 @@ public class PurpleEnemy : MonoBehaviour
 
     void Start()
     {
+        health = GetComponent<EnemyHealth>();
         objectRigidbody = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
@@ -66,6 +70,11 @@ public class PurpleEnemy : MonoBehaviour
 
     void Update()
     {
+        if (currentAIState == AIState.Dead) return;
+
+        if (health.currentHealth < 0.001)
+            transitionToDeadState();
+
         if (playerTransform == null) return;
 
         handleShootCooldown();
@@ -83,6 +92,8 @@ public class PurpleEnemy : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (currentAIState == AIState.Dead) return;
+
         if (playerTransform == null) return;
 
         checkCurrentDirection();
@@ -145,7 +156,10 @@ public class PurpleEnemy : MonoBehaviour
         muzzleFlashAnimator.SetTrigger("muzzleFlash");
 
         GameObject projectileShot = Instantiate(projectile) as GameObject;
-        projectileShot.GetComponent<Projectile>().SetDirection(currentDirection);
+        Projectile p = projectileShot.GetComponent<Projectile>();
+        p.SetDirection(currentDirection);
+        p.setDamage(damageAmount);
+        p.setTargetLayerMask(targetLayer);
         projectileShot.transform.position = projectilePoint.transform.position;
         projectileShot.SetActive(true);
     }
@@ -242,6 +256,7 @@ public class PurpleEnemy : MonoBehaviour
         animator.SetTrigger("death");
         currentAIState = AIState.Dead;
         audioSource.PlayOneShot(deathSound);
+        objectRigidbody.simulated = false;
     }
 
     private void handleAnimations()

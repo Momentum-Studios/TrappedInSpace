@@ -5,7 +5,7 @@
  * class: CS 4700 - Game Development
  * 
  * assignment: Program 4
- * date last modified: 11/26/2022
+ * date last modified: 11/28/2022
  * 
  * purpose: This script controls the movement, animations, melee, and other
  * functions of the Whipping Enemy
@@ -20,6 +20,7 @@ public class WhippingEnemy : MonoBehaviour
     [SerializeField] private float whipCooldown;
     [SerializeField] private AudioClip whipSound;
     [SerializeField] private AudioClip deathSound;
+    [SerializeField] private float damageAmount;
 
     private MoveController moveController;
     private ColliderTriggerHandler whipTrigger;
@@ -30,6 +31,7 @@ public class WhippingEnemy : MonoBehaviour
     private float whipCooldownRemaining;
     private bool isWhipping;
     private AudioSource audioSource;
+    private EnemyHealth health;
 
     private enum AIState
     {
@@ -41,6 +43,7 @@ public class WhippingEnemy : MonoBehaviour
 
     void Start()
     {
+        health = GetComponent<EnemyHealth>();
         whipTrigger = GetComponentInChildren<ColliderTriggerHandler>();
         moveController = GetComponent<MoveController>();
         currentAIState = AIState.Idle;
@@ -52,6 +55,9 @@ public class WhippingEnemy : MonoBehaviour
     void Update()
     {
         if (currentAIState == AIState.Dead) return;
+
+        if (health.currentHealth < 0.001)
+            transitionToDeadState();
 
         if (!playerTransform) return;
 
@@ -161,6 +167,7 @@ public class WhippingEnemy : MonoBehaviour
         animator.SetTrigger("death");
         currentAIState = AIState.Dead;
         audioSource.PlayOneShot(deathSound);
+        rigidbody2d.simulated = false;
     }
 
     // handle setting the different floats for the animation controller 
@@ -200,8 +207,10 @@ public class WhippingEnemy : MonoBehaviour
     // and when damage should be applied to the player (if within trigger collider)
     private void whipEvent()
     {
-        // TODO implement damage system
-        print("WHIP");
+        // check if player is within whip range and cooldown has expired
+        if (!whipTrigger.isInside || whipCooldownRemaining > 0f) return;
+
+        whipTrigger.gameObj.GetComponent<PlayerHealth>().TakeDamage(damageAmount);
     }
 
     // this is an animation event that is triggered at the end of the whipping

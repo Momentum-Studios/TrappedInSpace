@@ -21,6 +21,7 @@ public class Projectile : MonoBehaviour
     private LayerMask targetLayerMask;
     private float direction;
     private bool hit;
+    private float damageAmount;
 
     private BoxCollider2D boxCollider;
     private Animator anim;
@@ -48,12 +49,17 @@ public class Projectile : MonoBehaviour
     // and checks if hittable or target
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // ignore other triggers
+        if (collision.isTrigger) return; 
+
+        if (hit) return;
         // check if collider is hittable
-        if ((hittableLayerMask & (1 << collision.gameObject.layer)) == 0)
+        int layer = 1 << collision.gameObject.layer;
+        if ((hittableLayerMask & layer) == 0 && (targetLayerMask & layer) == 0)
             return;
         
-        if ((targetLayerMask & (1 << collision.gameObject.layer)) != 0)
-            Damage(collision.gameObject);
+        if ((targetLayerMask & layer) != 0)
+            damage(collision.gameObject);
 
         hit = true;
         boxCollider.enabled = false;
@@ -78,6 +84,11 @@ public class Projectile : MonoBehaviour
         transform.localScale = new Vector3(localScaleX, transform.localScale.y, transform.localScale.z);
     }
 
+    // sets the amount of damage this projectile should do
+    public void setDamage(float damage) {
+        damageAmount = damage;
+    }
+
 
     // sets the target layer mask which contains layers
     // which should be damaged
@@ -94,8 +105,13 @@ public class Projectile : MonoBehaviour
 
 
     // damages the GameObject target
-    private void Damage(GameObject target) {
-        // TODO implement damage system
+    private void damage(GameObject target) {
+        Health h = target.GetComponent<Health>();
+
+        // check if null
+        if (!h) return;
+
+        h.TakeDamage(damageAmount);
     }
 
 }

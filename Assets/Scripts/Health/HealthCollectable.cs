@@ -21,7 +21,7 @@ public class HealthCollectable : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            collision.GetComponent<Health>().AddHealth(healthValue);
+            collision.GetComponent<PlayerHealth>().AddHealth(healthValue);
             gameObject.SetActive(false);
         }
     }
