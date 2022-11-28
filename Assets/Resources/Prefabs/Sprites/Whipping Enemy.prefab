@@ -17,7 +17,8 @@ GameObject:
   - component: {fileID: 4850721290024355810}
   - component: {fileID: 4850721290024355811}
   - component: {fileID: 3638846593936861581}
-  m_Layer: 0
+  - component: {fileID: 9198527945161771735}
+  m_Layer: 11
   m_Name: Whipping Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,6 +150,7 @@ MonoBehaviour:
   whipCooldown: 1.5
   whipSound: {fileID: 8300000, guid: 643b6433454614087abdcec049bb0ebf, type: 3}
   deathSound: {fileID: 8300000, guid: 63a3dacab2d4b4cc489e07a19de3bbdb, type: 3}
+  damageAmount: 0
 --- !u!114 &4850721290024355812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +167,7 @@ MonoBehaviour:
   initialDirection: 1
   groundLayer:
     serializedVersion: 2
-    m_Bits: 16
+    m_Bits: 64
   groundedBoxCastDistance: 0.01
   stopAtEdge: 1
   distanceToEdge: 0.1
@@ -308,6 +310,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &9198527945161771735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4850721290024355818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ceb3238f35f746e6869aeb41dc431b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 3
 --- !u!1 &4850721290420809472
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,7 +334,7 @@ GameObject:
   - component: {fileID: 4850721290420809473}
   - component: {fileID: 4850721290420809502}
   - component: {fileID: 4850721290420809503}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Whip Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
