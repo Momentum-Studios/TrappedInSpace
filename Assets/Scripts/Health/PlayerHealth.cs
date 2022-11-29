@@ -118,15 +118,17 @@ public class PlayerHealth : Health
     }
 
     // update the health in the health slider
-    private void UpdateHP(){
-        HealthSlider.fillAmount=((100/startingHealth) * (currentHealth))/100;
-    }
+     private void UpdateHP()
+    {
+        HealthSlider.fillAmount = ((100 / startingHealth) * (currentHealth)) / 100;
+    } 
 
     // check for death by entering a "DeadCollision"
-    private void OnTriggerEnter2D(Collider2D c){
+    private void OnTriggerEnter2D(Collider2D c)
+    {
         //Make the player take 10 damage when they fell to death traps
         if (c.tag == "DeadCollision"){
-            TakeDamage(10);
+            TakeDamage(3);
         }
     }
 }
