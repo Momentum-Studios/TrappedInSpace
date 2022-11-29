@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -124,15 +124,15 @@ TextureImporter:
         y: 16
         width: 39
         height: 41
-      alignment: 0
+      alignment: 9
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 100a1a0e27efa2743a4b54dc0830d246
-      internalID: 2074486544
+      spriteID: ab2d3c8ad246648488618734d03fcc8a
+      internalID: 1733014930
       vertices: []
       indices: 
       edges: []
@@ -145,15 +145,15 @@ TextureImporter:
         y: 16
         width: 47
         height: 36
-      alignment: 0
+      alignment: 9
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0df8670d98c5da243a79bec626be8377
-      internalID: -1686519476
+      spriteID: 2aef3ab0c207cbd4f9483e89e6e6d603
+      internalID: -290657949
       vertices: []
       indices: 
       edges: []
@@ -166,15 +166,15 @@ TextureImporter:
         y: 16
         width: 50
         height: 24
-      alignment: 0
+      alignment: 9
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8bd9e09ce58d51f46a1267490df69373
-      internalID: 925614616
+      spriteID: 86dd4d64c56e41349a1ca09debec361c
+      internalID: -1086152457
       vertices: []
       indices: 
       edges: []
@@ -187,15 +187,15 @@ TextureImporter:
         y: 15
         width: 57
         height: 13
-      alignment: 0
+      alignment: 9
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 39ec5739c79744b428b658e550eccbe5
-      internalID: -1155183060
+      spriteID: c1754a5d1fed9af4096175cbe1aa6538
+      internalID: -1205520309
       vertices: []
       indices: 
       edges: []
@@ -211,10 +211,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Death-Sheet_3: -1155183060
-      Death-Sheet_2: 925614616
-      Death-Sheet_0: 2074486544
-      Death-Sheet_1: -1686519476
+      Death-Sheet_3: -1205520309
+      Death-Sheet_2: -1086152457
+      Death-Sheet_0: 1733014930
+      Death-Sheet_1: -290657949
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

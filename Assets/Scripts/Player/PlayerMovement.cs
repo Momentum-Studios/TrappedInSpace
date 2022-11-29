@@ -10,6 +10,7 @@
  * Purpose: Create a player game object that has the ability to interact with the game world. Running, Jumping, Take Damage etc.
  * 
  */
+using System.Threading;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -30,9 +31,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
 
-    [Header("Collectibles")]
-    [SerializeField] private float boostTimer;
-
     [Header("Audio Source")]
     [SerializeField] private AudioSource addHealthSoundEffect;
 
@@ -41,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D boxCollider;
 
     private float horizontalInput;
+    private float boostTimer;
     private bool isBoosting;
 
 
@@ -123,11 +122,10 @@ public class PlayerMovement : MonoBehaviour
             speed *= 1.5f;
             Destroy(collision.gameObject);
         }
-    }
-    
+    }  
     private void Jump()
-        {
-            if (hangCounter <= 0 && !onWall() && jumpCounter <= 0) return;
+    {
+        if (hangCounter <= 0 && !onWall() && jumpCounter <= 0) return;
             else
             {
                 if (isGrounded())
@@ -152,8 +150,7 @@ public class PlayerMovement : MonoBehaviour
             //Reset coyote counter to 0 to avoid double jumps
             hangCounter = 0;
             }
-        }
-
+    }
         private bool isGrounded()
         {
             RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
