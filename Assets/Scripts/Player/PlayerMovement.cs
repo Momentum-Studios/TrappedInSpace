@@ -89,11 +89,11 @@ public class PlayerMovement : MonoBehaviour
 
             if (isGrounded())
             {
-                hangCounter = hangTime; //Reset coyote counter when on the ground
+                hangCounter = hangTime; //Reset hang counter when on the ground
                 jumpCounter = extraJumps; //Reset jump counter to extra jump value
             }
             else
-                hangCounter -= Time.deltaTime; //Start decreasing coyote counter when not on the ground
+                hangCounter -= Time.deltaTime; //Start decreasing counter when not on the ground
         }
 
         if (isBoosting)
@@ -134,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
                     //SoundManager.instance.PlaySound(jumpSound);
                 else
                 {
-                    //If not on the ground and coyote counter bigger than 0 do a normal jump
+                    //If not on the ground and counter bigger than 0 do a normal jump
                     if (hangCounter > 0)
                         body.velocity = new Vector2(body.velocity.x, jumpPower);
                     else
@@ -147,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
                     }
                 }
 
-            //Reset coyote counter to 0 to avoid double jumps
+            //Reset hang counter to 0 to avoid double jumps
             hangCounter = 0;
             }
     }

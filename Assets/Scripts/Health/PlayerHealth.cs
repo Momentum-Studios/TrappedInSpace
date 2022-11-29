@@ -71,7 +71,7 @@ public class PlayerHealth : Health
         {
             if (!dead)
             {
-                //Deactivate all attached component classes
+                //Deactivate player movement and attack abilities
                 foreach (Behaviour component in components)
                     component.enabled = false;
 
@@ -117,8 +117,23 @@ public class PlayerHealth : Health
         gameObject.SetActive(false);
     }
 
+    //Respawn
+    public void Respawn()
+    {
+        dead = false;
+        AddHealth(startingHealth); 
+        anim.ResetTrigger("die");
+        anim.Play("Idle");
+        //UpdateHP();
+        StartCoroutine(Invunerability());
+
+        //Activate all attached component classes
+        foreach (Behaviour component in components)
+            component.enabled = true;
+    }
+
     // update the health in the health slider
-     private void UpdateHP()
+    private void UpdateHP()
     {
         HealthSlider.fillAmount = ((100 / startingHealth) * (currentHealth)) / 100;
     } 

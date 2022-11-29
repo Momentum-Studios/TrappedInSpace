@@ -16,4 +16,5 @@ public class CameraController : MonoBehaviour
         lookAhead = Mathf.Lerp(lookAhead, (aheadDistance * player.localScale.x), Time.deltaTime * cameraSpeed);
     }
 
+
 }
