@@ -36,6 +36,7 @@ public class PlayerAttack : MonoBehaviour
     // check for player input every frame and update the cooldown timer
     private void Update()
     {
+       
         if (Input.GetMouseButton(0) && cooldownTimer > attackCoolDown )
             Attack();
 
