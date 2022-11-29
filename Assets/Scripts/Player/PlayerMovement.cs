@@ -119,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isBoosting = true;
 
-            speed *= 1.5f;
+            speed *= 1.3f;
             Destroy(collision.gameObject);
         }
     }  
