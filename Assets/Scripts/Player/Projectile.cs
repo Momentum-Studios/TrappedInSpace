@@ -19,6 +19,7 @@ public class Projectile : MonoBehaviour
    [SerializeField] private float despawnTime = 5;
 
     private LayerMask targetLayerMask;
+    private Rigidbody2D rigidbody2d;
     private float direction;
     private bool hit;
     private float damageAmount;
@@ -32,16 +33,16 @@ public class Projectile : MonoBehaviour
     {
         boxCollider = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
+        rigidbody2d = GetComponent<Rigidbody2D>();
         Destroy(gameObject, despawnTime);
     }
 
 
-    // updates movement of projectile
-    private void Update()
-    {
+    // updates movements of projectile
+    private void FixedUpdate() {
         if (hit) return;
-        float movementSpeed = speed * Time.deltaTime * direction;
-        transform.Translate(movementSpeed, 0, 0);
+        float movementVelocity = speed * direction;
+        rigidbody2d.velocity = new Vector2(movementVelocity, rigidbody2d.velocity.y);
     }
 
 
@@ -62,6 +63,7 @@ public class Projectile : MonoBehaviour
             damage(collision.gameObject);
 
         hit = true;
+        rigidbody2d.velocity = Vector2.zero;
         boxCollider.enabled = false;
         anim.SetTrigger("explode");
     }
