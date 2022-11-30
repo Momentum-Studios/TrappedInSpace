@@ -34814,6 +34814,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7505798895854715809, guid: f89c0a200fa2b464999e95270456e93b, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 1600029348}
+    - target: {fileID: 7505798895854715809, guid: f89c0a200fa2b464999e95270456e93b, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 2066140116}
@@ -41467,6 +41471,11 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!20 &1600029348 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 7505798895854715743, guid: f89c0a200fa2b464999e95270456e93b, type: 3}
+  m_PrefabInstance: {fileID: 567313278}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1626532507
 GameObject:
   m_ObjectHideFlags: 0
