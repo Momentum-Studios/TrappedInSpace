@@ -5,7 +5,7 @@
  * class: CS 4700 - Game Development
  * 
  * assignment: Program 4
- * date last modified: 11/28/2022
+ * date last modified: 11/29/2022
  * 
  * purpose: This script controls the movement, animations, melee, and other
  * functions of the Whipping Enemy
@@ -41,6 +41,7 @@ public class WhippingEnemy : MonoBehaviour
         Dead
     }
 
+    // setup by getting components and setting initial AI state
     void Start()
     {
         health = GetComponent<EnemyHealth>();
@@ -52,6 +53,8 @@ public class WhippingEnemy : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    // update AI state and perform that state
+    // excluding all movement AI states
     void Update()
     {
         if (currentAIState == AIState.Dead) return;
@@ -78,9 +81,14 @@ public class WhippingEnemy : MonoBehaviour
         handleAnimations();
     }
 
+    // handle AI states for moving
     void FixedUpdate()
     {
         if (currentAIState == AIState.Dead) return;
+
+        // stop momving if grounded and idle
+        if (currentAIState == AIState.Idle && moveController.isGrounded)
+            moveController.stopMoving();
 
         if (!playerTransform) return;
 
