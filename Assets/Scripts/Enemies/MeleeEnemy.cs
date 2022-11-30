@@ -1,5 +1,5 @@
 /**
- * file: WhippingEnemy.cs
+ * file: MeleeEnemy.cs
  * studio: Momentum Studios
  * authors: Justin Kim
  * class: CS 4700 - Game Development
@@ -14,11 +14,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WhippingEnemy : MonoBehaviour
+public class MeleeEnemy : MonoBehaviour
 {
     [SerializeField] private float targetDistance;
     [SerializeField] private float attackCooldown;
     [SerializeField] private float damageAmount;
+    [SerializeField] private bool reverseDirection;
     [SerializeField] private AudioClip attackSound;
     [SerializeField] private AudioClip deathSound;
 
@@ -184,8 +185,12 @@ public class WhippingEnemy : MonoBehaviour
     {
         animator.SetFloat("speed", Mathf.Abs(rigidbody2d.velocity.x));
 
+        float scaleDir = Mathf.Sign(transform.localScale.x);
+
+        if (reverseDirection) scaleDir = -scaleDir;
+
         // flip sprite if current direction different from scale direction
-        if (moveController.currentDirection != Mathf.Sign(transform.localScale.x))
+        if (moveController.currentDirection != scaleDir)
         {
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
