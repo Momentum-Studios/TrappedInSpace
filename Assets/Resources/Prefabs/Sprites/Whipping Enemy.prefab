@@ -147,10 +147,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetDistance: 0.5
-  whipCooldown: 1.5
-  whipSound: {fileID: 8300000, guid: 643b6433454614087abdcec049bb0ebf, type: 3}
+  attackCooldown: 1
+  damageAmount: 1
+  attackSound: {fileID: 8300000, guid: 643b6433454614087abdcec049bb0ebf, type: 3}
   deathSound: {fileID: 8300000, guid: 63a3dacab2d4b4cc489e07a19de3bbdb, type: 3}
-  damageAmount: 0
 --- !u!114 &4850721290024355812
 MonoBehaviour:
   m_ObjectHideFlags: 0

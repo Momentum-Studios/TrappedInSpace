@@ -8,7 +8,7 @@
  * date last modified: 11/29/2022
  * 
  * purpose: This script controls the movement, animations, melee, and other
- * functions of the Whipping Enemy
+ * functions of melee enemies
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -17,19 +17,19 @@ using UnityEngine;
 public class WhippingEnemy : MonoBehaviour
 {
     [SerializeField] private float targetDistance;
-    [SerializeField] private float whipCooldown;
-    [SerializeField] private AudioClip whipSound;
-    [SerializeField] private AudioClip deathSound;
+    [SerializeField] private float attackCooldown;
     [SerializeField] private float damageAmount;
+    [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioClip deathSound;
 
     private MoveController moveController;
-    private ColliderTriggerHandler whipTrigger;
+    private ColliderTriggerHandler attackTrigger;
     private Rigidbody2D rigidbody2d;
     private Animator animator;
     private Transform playerTransform;
     private AIState currentAIState;
-    private float whipCooldownRemaining;
-    private bool isWhipping;
+    private float attackCooldownRemaining;
+    private bool isAttacking;
     private AudioSource audioSource;
     private EnemyHealth health;
 
@@ -37,7 +37,7 @@ public class WhippingEnemy : MonoBehaviour
     {
         Idle,
         Chasing,
-        Whipping,
+        Attacking,
         Dead
     }
 
@@ -45,7 +45,7 @@ public class WhippingEnemy : MonoBehaviour
     void Start()
     {
         health = GetComponent<EnemyHealth>();
-        whipTrigger = GetComponentInChildren<ColliderTriggerHandler>();
+        attackTrigger = GetComponentInChildren<ColliderTriggerHandler>();
         moveController = GetComponent<MoveController>();
         currentAIState = AIState.Idle;
         animator = GetComponent<Animator>();
@@ -69,8 +69,8 @@ public class WhippingEnemy : MonoBehaviour
         // handle different AI states
         switch (currentAIState)
         {
-            case AIState.Whipping:
-                performWhip();
+            case AIState.Attacking:
+                performAttack();
                 break;
             case AIState.Idle:
             case AIState.Chasing:
@@ -86,7 +86,7 @@ public class WhippingEnemy : MonoBehaviour
     {
         if (currentAIState == AIState.Dead) return;
 
-        // stop momving if grounded and idle
+        // stop moving if grounded and idle
         if (currentAIState == AIState.Idle && moveController.isGrounded)
             moveController.stopMoving();
 
@@ -102,7 +102,7 @@ public class WhippingEnemy : MonoBehaviour
                 doChasingState();
                 break;
             case AIState.Dead:
-            case AIState.Whipping:
+            case AIState.Attacking:
                 break;
         }
     }
@@ -132,9 +132,9 @@ public class WhippingEnemy : MonoBehaviour
         }
         
         // transition to whipping state if close enough
-        if (isAbleToWhip())  
+        if (isAbleToAttack())  
         {
-            currentAIState = AIState.Whipping;
+            currentAIState = AIState.Attacking;
             return;
         }
 
@@ -153,9 +153,9 @@ public class WhippingEnemy : MonoBehaviour
 
         if (distanceFromPlayer <= targetDistance)
         {
-            if (isAbleToWhip())   // transition to whipping state if close enough to player and can whip
+            if (isAbleToAttack())   // transition to whipping state if close enough to player and can whip
             {
-                currentAIState = AIState.Whipping;
+                currentAIState = AIState.Attacking;
             }
             else    // transition to idle state if within target distance
             {
@@ -192,48 +192,48 @@ public class WhippingEnemy : MonoBehaviour
     }
 
     // trigger a whip animation and reset the whipping cooldown
-    private void performWhip()
+    private void performAttack()
     {
-        if (isWhipping) return;
+        if (isAttacking) return;
 
-        whipCooldownRemaining = whipCooldown;
-        animator.SetTrigger("whip");
-        isWhipping = true;
-        audioSource.PlayOneShot(whipSound);
+        attackCooldownRemaining = attackCooldown;
+        animator.SetTrigger("attack");
+        isAttacking = true;
+        audioSource.PlayOneShot(attackSound);
     }
 
     // subtract from the whip cooldown every update
     private void handleWhipCooldown()
     {
-        if (whipCooldownRemaining > 0.0f)
+        if (attackCooldownRemaining > 0.0f)
         {
-            whipCooldownRemaining -= Time.deltaTime;
+            attackCooldownRemaining -= Time.deltaTime;
         }
     }
 
     // this is an animation event that is triggered during the whipping animation
     // and when damage should be applied to the player (if within trigger collider)
-    private void whipEvent()
+    private void attackEvent()
     {
         // check if player is within whip range
-        if (!whipTrigger.isInside) return;
+        if (!attackTrigger.isInside) return;
 
-        whipTrigger.gameObj.GetComponent<PlayerHealth>().TakeDamage(damageAmount);
+        attackTrigger.gameObj.GetComponent<PlayerHealth>().TakeDamage(damageAmount);
     }
 
     // this is an animation event that is triggered at the end of the whipping
     // animation and returns the AI state to the idle state
-    private void whipFinishEvent()
+    private void attackFinishEvent()
     {
         // transition to idle state when whipping state is finished
         currentAIState = AIState.Idle;
-        isWhipping = false;
+        isAttacking = false;
     }
 
     // checks whether the enemy is able to whip by checking if the player is inside
     // the whip trigger collider and the cooldown has expired
-    private bool isAbleToWhip()
+    private bool isAbleToAttack()
     {
-        return whipTrigger.isInside && whipCooldownRemaining <= 0f;
+        return attackTrigger.isInside && attackCooldownRemaining <= 0f;
     }
 }
