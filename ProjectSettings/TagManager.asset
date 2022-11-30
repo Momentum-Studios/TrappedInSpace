@@ -9,6 +9,7 @@ TagManager:
   - Blaster
   - DeadCollision
   - CheckPoint
+  - Trap
   layers:
   - Default
   - TransparentFX
