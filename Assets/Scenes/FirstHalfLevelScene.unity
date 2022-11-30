@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 150272635}
   - component: {fileID: 150272634}
   - component: {fileID: 150272633}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spawn Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
