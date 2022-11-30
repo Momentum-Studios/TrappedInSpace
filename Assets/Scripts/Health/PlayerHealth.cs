@@ -141,7 +141,7 @@ public class PlayerHealth : Health
     // check for death by entering a "DeadCollision"
     private void OnTriggerEnter2D(Collider2D c)
     {
-        //Make the player take 10 damage when they fell to death traps
+        //Make the player take 3 damage when they fell to death traps
         if (c.tag == "DeadCollision"){
             TakeDamage(3);
         }
