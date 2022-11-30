@@ -100,6 +100,10 @@ public class PurpleEnemy : MonoBehaviour
     {
         if (currentAIState == AIState.Dead) return;
 
+        // keep still if idle and on ground
+        checkGrounded();
+        if (isGrounded) objectRigidbody.velocity = new Vector2(0, objectRigidbody.velocity.y);
+
         if (playerTransform == null) return;
 
         checkCurrentDirection();
