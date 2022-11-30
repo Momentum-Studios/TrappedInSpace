@@ -300,7 +300,7 @@ GameObject:
   m_Component:
   - component: {fileID: 185440950}
   m_Layer: 0
-  m_Name: =============COLLECTIBLES=================
+  m_Name: =============COLLECTIBLES=======================
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33805,7 +33805,7 @@ GameObject:
   m_Component:
   - component: {fileID: 383634240}
   m_Layer: 0
-  m_Name: ================LEVEL======================
+  m_Name: ================LEVEL==========================
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37921,7 +37921,7 @@ GameObject:
   m_Component:
   - component: {fileID: 775977657}
   m_Layer: 0
-  m_Name: ================PLAYER======================
+  m_Name: ================PLAYER=========================
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38932,7 +38932,7 @@ GameObject:
   m_Component:
   - component: {fileID: 975056906}
   m_Layer: 0
-  m_Name: ============PAUSE SCREEN============
+  m_Name: ============ MAIN/ PAUSE SCREEN===================
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
