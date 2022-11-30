@@ -321,4 +321,9 @@ public class PurpleEnemy : MonoBehaviour
             shootCooldownRemaining -= Time.deltaTime;
         }
     }
+
+    public string getCurrentAIState()
+    {
+        return currentAIState.ToString();
+    }
 }

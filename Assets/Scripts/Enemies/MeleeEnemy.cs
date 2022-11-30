@@ -241,4 +241,9 @@ public class MeleeEnemy : MonoBehaviour
     {
         return attackTrigger.isInside && attackCooldownRemaining <= 0f;
     }
+
+    public string getCurrentAIState()
+    {
+        return currentAIState.ToString();
+    }
 }
