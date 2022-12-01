@@ -9,10 +9,14 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenu;
     public static bool isPaused;
 
+    //private PlayerMovement playerMove;
+
     // Start is called before the first frame update
     void Start()
     {
         pauseMenu.SetActive(false);
+        //playerMove = GetComponent<PlayerMovement>();
+        // you can now call methods like playerMove.CanAttack()
     }
 
     // Update is called once per frame
