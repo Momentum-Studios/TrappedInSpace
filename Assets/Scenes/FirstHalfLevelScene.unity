@@ -39345,7 +39345,7 @@ GameObject:
   m_Component:
   - component: {fileID: 975056906}
   m_Layer: 0
-  m_Name: =============== GAME MENUS======================
+  m_Name: ============ MAIN/ PAUSE SCREEN===================
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

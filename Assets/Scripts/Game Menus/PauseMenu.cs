@@ -6,15 +6,13 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
 
-    private GameObject pauseMenu;
-    private static bool isPaused;
-    private PlayerHealth health;
+    public GameObject pauseMenu;
+    public static bool isPaused;
 
     // Start is called before the first frame update
     void Start()
     {
         pauseMenu.SetActive(false);
-        health= GetComponent<PlayerHealth>(); // you can now use any method from the Player Heatlh Script like this... health.CanAttack() 
     }
 
     // Update is called once per frame
