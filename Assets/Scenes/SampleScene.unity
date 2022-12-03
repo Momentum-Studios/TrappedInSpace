@@ -254,6 +254,16 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: 27, y: -7, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 4
+      m_TileSpriteIndex: 4
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: 18, y: -6, z: 0}
     second:
       serializedVersion: 2
@@ -274,6 +284,8 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 966348c7d34438747ab22ce18180f460, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: c22506a898805444a9e9d2147c6c3eea, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 34bfec30b53e66c4682de7f946ba5843, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 2
     m_Data: {fileID: 21300000, guid: 509fc4d27e792e543ae7d0cd616a23c0, type: 3}
@@ -283,8 +295,10 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: 76e3ccfd4b8c57d49a480733b31c20d2, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: c5f6edbb1be3d65408ae833351ba1656, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: 47dfb727a66893b49af2e1b7a4b6307b, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 5
+  - m_RefCount: 6
     m_Data:
       e00: 1
       e01: 0
@@ -303,13 +317,13 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 5
+  - m_RefCount: 6
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -15, y: -7, z: 0}
-  m_Size: {x: 35, y: 7, z: 1}
+  m_Size: {x: 43, y: 7, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -411,7 +425,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &540429163
 GameObject:
@@ -618,7 +632,7 @@ Transform:
   - {fileID: 540429164}
   - {fileID: 1164096486}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1164096485
 GameObject:
@@ -715,7 +729,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -728,10 +742,10 @@ Tilemap:
   - m_RefCount: 0
     m_Data: {fileID: 0}
   m_TileSpriteArray:
-  - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: 6a2c1a5dce2a90a4d87387a39ce5fd36, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: 6a2c1a5dce2a90a4d87387a39ce5fd36, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 1
     m_Data:
@@ -3598,7 +3612,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 2
-      m_TileSpriteIndex: 2
+      m_TileSpriteIndex: 5
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -4038,7 +4052,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileSpriteIndex: 4
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -4223,18 +4237,18 @@ Tilemap:
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 4202c311091f17f4f9528adef673473d, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: cb513591dac53df449a1d8d3adf3eba7, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 43
     m_Data: {fileID: 21300000, guid: f4e6119137db40d499835b68a3edb268, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: cb513591dac53df449a1d8d3adf3eba7, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: b63fb2e035bdf334fa5feb4b2bbf4dde, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 976ca4cf1ed85d747a979747f91ac947, type: 3}
   - m_RefCount: 1
