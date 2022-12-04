@@ -36,11 +36,12 @@ public class PlayerAttack : MonoBehaviour
     // check for player input every frame and update the cooldown timer
     private void Update()
     {
-       
-        if (Input.GetMouseButton(0) && cooldownTimer > attackCoolDown )
-            Attack();
+        if(!PauseMenu.isPaused){
+            if (Input.GetMouseButton(0) && cooldownTimer > attackCoolDown )
+                Attack();
 
-        cooldownTimer += Time.deltaTime;
+            cooldownTimer += Time.deltaTime;
+        }
     }
 
     // handle the attack action by firing the blaster
