@@ -1,7 +1,7 @@
 /**
  * file: HealthCollectible.cs
  * studio: Momentum Studios
- * authors: Daniel Rodriguez, Matthew Chu
+ * authors: Daniel Rodriguez, Matthew Cheser
  * class: CS 4700 - Game Development
  * 
  * Assignment: Program 4
