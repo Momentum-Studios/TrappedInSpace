@@ -16,9 +16,25 @@ using UnityEngine;
 
 public class EnemyHealth : Health
 {
+    private bool damageable;
+
     // setup current health by setting it to starting health
     private void Awake()
     {
         currentHealth = startingHealth;
+        damageable = false;
+    }
+
+    // handle damaging of enemy and check if damageable
+    public override void TakeDamage(float damage)
+    {
+        if (damageable) {
+            base.TakeDamage(damage);
+        }
+    }
+
+    // set whether the enemy can be damaged
+    public void setDamageable(bool d) {
+        damageable = d;
     }
 }

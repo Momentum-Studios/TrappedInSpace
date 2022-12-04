@@ -123,12 +123,14 @@ public class PurpleEnemy : MonoBehaviour
 
     // activate this enemy once it detects the player within a 
     // certain range
-    void OnTriggerEnter2D(Collider2D collider)
+    void OnBecameVisible()
     {
-        // detect player within circle collider trigger
-        if (collider.gameObject.name == "Player" && playerTransform == null)
+        // detect player within range
+        if (playerTransform == null)
         {
-            playerTransform = collider.gameObject.transform;
+            GameObject p = GameObject.Find("Player");
+            playerTransform = p.transform;
+            health.setDamageable(true);
         }
     }
 

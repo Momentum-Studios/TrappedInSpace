@@ -108,12 +108,16 @@ public class MeleeEnemy : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D c)
+    // detect player and activate enemy when
+    // in range of enemy
+    void OnBecameVisible()
     {
-        // detect player within circle collider trigger
-        if (c.gameObject.name == "Player" && playerTransform == null)
+        // detect player within range
+        if (playerTransform == null)
         {
-            playerTransform = c.gameObject.transform;
+            GameObject p = GameObject.Find("Player");
+            playerTransform = p.transform;
+            health.setDamageable(true);
         }
     }
 
