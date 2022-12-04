@@ -101,16 +101,13 @@ public class PlayerMovement : MonoBehaviour
 
             boostTimer += Time.deltaTime;
 
-            if (boostTimer >= 4)
-            {
-                speed = 5f;
-
-                if (boostTimer >= 3)
-                {
-                    boostTimer = 0;
-                    isBoosting = false;
-                }
-            }
+            if (boostTimer >= 3)
+             {
+                boostTimer = 0;
+                isBoosting = false;
+                speed /= 1.3f;
+             }
+            
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
