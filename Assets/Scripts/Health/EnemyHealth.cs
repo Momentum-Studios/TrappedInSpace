@@ -37,4 +37,13 @@ public class EnemyHealth : Health
     public void setDamageable(bool d) {
         damageable = d;
     }
+
+    // check for death by entering a "DeadCollision"
+    private void OnTriggerEnter2D(Collider2D c)
+    {
+        //Make the player take 3 damage when they fell to death traps
+        if (c.tag == "DeadCollision"){
+            TakeDamage(3);
+        }
+    }
 }
