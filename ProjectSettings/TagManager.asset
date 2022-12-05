@@ -11,6 +11,7 @@ TagManager:
   - CheckPoint
   - Trap
   - Trap2
+  - EndLevel
   layers:
   - Default
   - TransparentFX
