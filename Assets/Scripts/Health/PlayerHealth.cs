@@ -44,14 +44,6 @@ public class PlayerHealth : Health
         invulnerable = false;
     }
 
-    // test if health bar works by pressing E,
-    // you should see health decrease
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-            TakeDamage(1);
-    }
-
     // handles taking damage, playing sounds for damage
     // and the corresponding animation, and gives player invulnerability
     public override void TakeDamage(float _damage)
