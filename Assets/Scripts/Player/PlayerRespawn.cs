@@ -32,6 +32,7 @@ public class PlayerRespawn : MonoBehaviour
     // handle respawning player
     public void Respawn()
     {
+        Physics2D.IgnoreLayerCollision(10, 11, false);
         gameManager.reloadLevel();
     }
 

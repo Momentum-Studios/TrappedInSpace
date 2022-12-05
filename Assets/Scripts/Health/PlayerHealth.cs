@@ -41,6 +41,7 @@ public class PlayerHealth : Health
         currentHealth = startingHealth;
         anim = GetComponent<Animator>();
         spriteRend = GetComponent<SpriteRenderer>();
+        invulnerable = false;
     }
 
     // test if health bar works by pressing E,
