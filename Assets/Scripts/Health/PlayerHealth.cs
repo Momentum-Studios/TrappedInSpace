@@ -1,13 +1,13 @@
 /**
  * file: PlayerHealth.cs
  * studio: Momentum Studios
- * authors: Daniel Rodriguez, Daniel Nam, Justin Kim
+ * authors: Daniel Rodriguez, Daniel Nam, Justin Kim, Gregorius avip
  * class: CS 4700 - Game Development
  * 
  * Assignment: Program 4
  * Date last modified: 11/28/2022
  * 
- * Purpose: Gives players health that can be given, taken or reset when taking damage or picking up health boosts
+ * Purpose: Gives players health that can be given, taken or reset when taking damage or picking up health boosts. Any other health interaction 
  * 
  */
 using System.Collections;
