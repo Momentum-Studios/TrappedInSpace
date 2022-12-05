@@ -7,7 +7,7 @@ public class EndLevel2 : MonoBehaviour
 {
     void OnTriggerEnter2D(Collider2D c){
         if(c.tag == "EndLevel"){
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("Level Finish");
         }
     }
 }
