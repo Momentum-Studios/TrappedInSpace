@@ -5287,6 +5287,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3884311376766178400, guid: 822c4ed2fd5293e4bb6a1fd5b666e273, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 432.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 3884311376766178400, guid: 822c4ed2fd5293e4bb6a1fd5b666e273, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 55.246
+      objectReference: {fileID: 0}
+    - target: {fileID: 3884311376766178400, guid: 822c4ed2fd5293e4bb6a1fd5b666e273, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.001215
+      objectReference: {fileID: 0}
+    - target: {fileID: 3884311376766178400, guid: 822c4ed2fd5293e4bb6a1fd5b666e273, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.68583
+      objectReference: {fileID: 0}
+    - target: {fileID: 3884311377507999865, guid: 822c4ed2fd5293e4bb6a1fd5b666e273, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 432.0832
+      objectReference: {fileID: 0}
+    - target: {fileID: 3884311377507999865, guid: 822c4ed2fd5293e4bb6a1fd5b666e273, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 56.6178
+      objectReference: {fileID: 0}
+    - target: {fileID: 3884311377507999865, guid: 822c4ed2fd5293e4bb6a1fd5b666e273, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -994.0117
+      objectReference: {fileID: 0}
+    - target: {fileID: 3884311377507999865, guid: 822c4ed2fd5293e4bb6a1fd5b666e273, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 637.29346
+      objectReference: {fileID: 0}
     - target: {fileID: 3884311378464752955, guid: 822c4ed2fd5293e4bb6a1fd5b666e273, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -5383,7 +5415,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 822c4ed2fd5293e4bb6a1fd5b666e273, type: 3}
 --- !u!114 &436227662 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3884311377507999866, guid: 822c4ed2fd5293e4bb6a1fd5b666e273, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3884311376766178401, guid: 822c4ed2fd5293e4bb6a1fd5b666e273, type: 3}
   m_PrefabInstance: {fileID: 436227661}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
