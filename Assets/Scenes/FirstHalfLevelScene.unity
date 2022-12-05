@@ -42059,6 +42059,10 @@ PrefabInstance:
       propertyPath: groundLayer.m_Bits
       value: 64
       objectReference: {fileID: 0}
+    - target: {fileID: 5239530996397306698, guid: 993bd5d527fa041f7a5964a4418cd2bb, type: 3}
+      propertyPath: attackCoolDown
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 5239530996397306699, guid: 993bd5d527fa041f7a5964a4418cd2bb, type: 3}
       propertyPath: HealthSlider
       value: 
