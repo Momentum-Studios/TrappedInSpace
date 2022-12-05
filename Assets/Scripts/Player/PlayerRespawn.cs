@@ -43,7 +43,6 @@ public class PlayerRespawn : MonoBehaviour
             checkpointSound.Play();
             gameManager.setCheckPoint(new Vector3(collision.transform.position.x, collision.transform.position.y, collision.transform.position.z));
             collision.GetComponent<Collider2D>().enabled = false;
-            print("test");
         }
     }
 }
