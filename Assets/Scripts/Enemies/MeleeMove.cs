@@ -1,3 +1,15 @@
+/**
+ * file: MeleeMove.cs
+ * studio: Momentum Studios
+ * authors: Matthew Cheser
+ * class: CS 4700 - Game Development
+ * 
+ * Assignment: Program 4
+ * date last modified: 11/21/2022
+ * 
+ * Purpose: Code for the Melee Enemy
+ * 
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
