@@ -157,7 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   jumpPower: 15
-  hangTime: 0.01
+  hangTime: 0.5
   extraJumps: 1
   groundLayer:
     serializedVersion: 2
